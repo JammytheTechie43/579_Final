@@ -1,4 +1,33 @@
-/* temporary style to confirm CSS loads. */
+/* Style for the header */
 h1 {
-  color: blue;
+  color: #00274C; /* Michigan Blue */
+}
+
+h2 {
+  font-size: 1.2em;
+  color: #333;
+}
+
+#notes-section, #events-section {
+  margin-top: 1rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+}
+
+.event-item {
+  margin-top: 10px;
+}
+
+.event-item h4 {
+  font-size: 1em;
+  color: #FFCB05; /* Michigan Maize */
 }

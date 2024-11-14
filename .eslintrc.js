@@ -1,11 +1,15 @@
 module.exports = {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
+  env: {
+    browser: true,
+    es6: true,
+    node: true
   },
-  "plugins": [ "no-for-loop", "unicorn" ],
-  "rules": {
+  parserOptions: {
+    ecmaVersion: 2020, // Enables modern JavaScript syntax support
+    sourceType: 'module' // Allows for `import` and `export` statements
+  },
+  plugins: ["no-for-loop", "unicorn"],
+  rules: {
     "no-for-loop/no-for-loop": ["warn"],
     "indent": ["warn", 2],
     "no-var": ["warn"],
@@ -22,4 +26,4 @@ module.exports = {
     "no-unused-vars": "warn",
     "unicorn/prefer-query-selector": "warn",
   }
-}
+};
