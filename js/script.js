@@ -23,8 +23,44 @@ function displayNotes() {
   });
 }
 
-// Call displayNotes on load
-displayNotes();
+// Save notes from calendar events
+function saveNoteFromCalendar(noteText) {
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  notes.push(noteText);
+  localStorage.setItem('notes', JSON.stringify(notes));
+  displayNotes();
+}
+
+// Initialize the calendar
+document.addEventListener('DOMContentLoaded', () => {
+  const calendarEl = document.getElementById('calendar');
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    events: async function (info, successCallback, failureCallback) {
+      try {
+        const response = await fetch('https://events.umich.edu/day/json');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const eventsData = await response.json();
+
+        const events = eventsData.map(event => ({
+          title: event.title,
+          start: event.date, // Assuming event.date is in YYYY-MM-DD format
+          url: event.url, // Link to the event
+        }));
+        successCallback(events);
+      } catch (error) {
+        console.error('Error fetching U-M events:', error);
+        failureCallback(error);
+      }
+    },
+    eventClick: function (info) {
+      info.jsEvent.preventDefault();
+      const noteText = `Event: ${info.event.title}, Date: ${info.event.start.toISOString().split('T')[0]}, URL: ${info.event.url}`;
+      saveNoteFromCalendar(noteText);
+    },
+  });
+  calendar.render();
+});
 
 // Function to fetch and display U-M events
 async function fetchUMEvents() {
@@ -40,7 +76,7 @@ async function fetchUMEvents() {
   }
 }
 
-// Function to display events in the extension's popup
+// Display U-M events in the list
 function displayEvents(events) {
   const eventsList = document.querySelector('#events-list');
   eventsList.innerHTML = ''; // Clear previous events
@@ -58,7 +94,8 @@ function displayEvents(events) {
   });
 }
 
-// Call fetchUMEvents when the popup is loaded
+// Call displayNotes and fetchUMEvents on load
 document.addEventListener('DOMContentLoaded', () => {
+  displayNotes();
   fetchUMEvents();
 });

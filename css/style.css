@@ -1,33 +1,150 @@
-/* Style for the header */
+/* General Page Styling */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa; /* Light gray background */
+  margin: 0;
+  padding: 0;
+}
+
 h1 {
   color: #00274C; /* Michigan Blue */
+  font-size: 2em;
+  text-align: center;
+  margin: 20px 0;
 }
 
-h2 {
-  font-size: 1.2em;
+h2, h3 {
   color: #333;
+  margin-top: 1rem;
 }
 
-#notes-section, #events-section {
-  margin-top: 1rem;
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Notes Section */
+#notes-section {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 textarea {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+#save-note {
+  background-color: #FFCB05; /* Michigan Maize */
+  border: none;
+  color: #00274C; /* Michigan Blue */
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#save-note:hover {
+  background-color: #EAAA00; /* Slightly darker Maize */
+  color: #00274C;
+}
+
+#notes-list {
+  margin-top: 20px;
+}
+
+#notes-list div {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Events Section */
+#events-section {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#calendar {
+  margin-top: 20px;
+}
+
+/* Calendar Styling (FullCalendar Overrides) */
+.fc {
+  font-family: Arial, sans-serif;
+}
+
+.fc-toolbar-title {
+  font-size: 1.5em;
+  color: #00274C; /* Michigan Blue */
+}
+
+.fc-event {
+  background-color: #FFCB05; /* Michigan Maize */
+  color: #00274C; /* Michigan Blue */
+  border: none;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.fc-event:hover {
+  background-color: #EAAA00; /* Darker Maize */
+  cursor: pointer;
+}
+
+#events-list .event-item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 4px;
 }
 
-button {
-  width: 100%;
-}
-
-.event-item {
-  margin-top: 10px;
-}
-
-.event-item h4 {
+#events-list h4 {
   font-size: 1em;
   color: #FFCB05; /* Michigan Maize */
+}
+
+#events-list a {
+  color: #00274C; /* Michigan Blue */
+  text-decoration: underline;
+}
+
+#events-list a:hover {
+  color: #EAAA00; /* Darker Maize */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  textarea {
+    font-size: 0.9em;
+  }
+
+  #save-note {
+    font-size: 0.9em;
+    padding: 8px;
+  }
 }
