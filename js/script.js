@@ -1,4 +1,29 @@
-// Save note
+// Dummy Data for Michigan Hockey Schedule
+const hockeySchedule = [
+  {
+    title: 'Michigan vs. Ohio State',
+    start: '2024-12-08T19:00:00',
+    location: 'Yost Ice Arena',
+    description: 'Big Ten Conference Game',
+    url: 'https://mgoblue.com/sports/mens-ice-hockey/schedule'
+  },
+  {
+    title: 'Michigan vs. Wisconsin',
+    start: '2024-12-15T19:00:00',
+    location: 'Yost Ice Arena',
+    description: 'Big Ten Conference Game',
+    url: 'https://mgoblue.com/sports/mens-ice-hockey/schedule'
+  },
+  {
+    title: 'Michigan @ Minnesota',
+    start: '2024-12-22T18:00:00',
+    location: '3M Arena at Mariucci',
+    description: 'Big Ten Conference Game',
+    url: 'https://mgoblue.com/sports/mens-ice-hockey/schedule'
+  }
+];
+
+// Save Note Functionality
 document.querySelector('#save-note').addEventListener('click', () => {
   const noteInput = document.querySelector('#note-input').value;
   if (noteInput) {
@@ -6,96 +31,64 @@ document.querySelector('#save-note').addEventListener('click', () => {
     notes.push(noteInput);
     localStorage.setItem('notes', JSON.stringify(notes));
     document.querySelector('#note-input').value = ''; // Clear input
-    displayNotes(); // Refresh the notes display
+    displayNotes();
   }
 });
 
-// Display notes
+// Display Saved Notes
 function displayNotes() {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const notesList = document.querySelector('#notes-list');
-  notesList.innerHTML = ''; // Clear previous notes
+  notesList.innerHTML = '';
 
   notes.forEach((note, index) => {
     const noteDiv = document.createElement('div');
     noteDiv.textContent = `${index + 1}. ${note}`;
+    noteDiv.classList.add('note-item');
     notesList.appendChild(noteDiv);
   });
 }
 
-// Save notes from calendar events
-function saveNoteFromCalendar(noteText) {
-  const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notes.push(noteText);
-  localStorage.setItem('notes', JSON.stringify(notes));
-  displayNotes();
-}
-
-// Initialize the calendar
-document.addEventListener('DOMContentLoaded', () => {
-  const calendarEl = document.getElementById('calendar');
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    events: async function (info, successCallback, failureCallback) {
-      try {
-        const response = await fetch('https://events.umich.edu/day/json');
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const eventsData = await response.json();
-
-        const events = eventsData.map(event => ({
-          title: event.title,
-          start: event.date, // Assuming event.date is in YYYY-MM-DD format
-          url: event.url, // Link to the event
-        }));
-        successCallback(events);
-      } catch (error) {
-        console.error('Error fetching U-M events:', error);
-        failureCallback(error);
-      }
-    },
-    eventClick: function (info) {
-      info.jsEvent.preventDefault();
-      const noteText = `Event: ${info.event.title}, Date: ${info.event.start.toISOString().split('T')[0]}, URL: ${info.event.url}`;
-      saveNoteFromCalendar(noteText);
-    },
-  });
-  calendar.render();
-});
-
-// Function to fetch and display U-M events
-async function fetchUMEvents() {
-  try {
-    const response = await fetch('https://events.umich.edu/day/json');
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const eventsData = await response.json();
-    displayEvents(eventsData);
-  } catch (error) {
-    console.error('Error fetching U-M events:', error);
-  }
-}
-
-// Display U-M events in the list
-function displayEvents(events) {
+// Display Hockey Games as a List
+function displayEvents() {
   const eventsList = document.querySelector('#events-list');
-  eventsList.innerHTML = ''; // Clear previous events
+  eventsList.innerHTML = '';
 
-  events.forEach(event => {
+  hockeySchedule.forEach((game) => {
     const eventItem = document.createElement('div');
     eventItem.classList.add('event-item');
     eventItem.innerHTML = `
-      <h4>${event.title}</h4>
-      <p>${event.date} at ${event.time}</p>
-      <p>${event.location}</p>
-      <a href="${event.url}" target="_blank">More Info</a>
+      <h4>${game.title}</h4>
+      <p>Date: ${new Date(game.start).toLocaleString()}</p>
+      <p>Location: ${game.location}</p>
+      <p>Description: ${game.description}</p>
+      <a href="${game.url}" target="_blank">More Info</a>
     `;
     eventsList.appendChild(eventItem);
   });
 }
 
-// Call displayNotes and fetchUMEvents on load
+// Initialize FullCalendar
 document.addEventListener('DOMContentLoaded', () => {
-  displayNotes();
-  fetchUMEvents();
+  displayNotes(); // Load saved notes
+  displayEvents(); // Display hockey games as a list
+
+  const calendarEl = document.querySelector('#calendar');
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    events: hockeySchedule, // Load hockey schedule in the calendar
+    eventClick: function (info) {
+      info.jsEvent.preventDefault();
+      if (info.event.extendedProps.url) {
+        window.open(info.event.extendedProps.url, '_blank'); // Open game details in a new tab
+      }
+    },
+    eventDidMount: function (info) {
+      // Optional: Add tooltip for games
+      info.el.title = `${info.event.title} - ${info.event.extendedProps.location}`;
+    }
+  });
+
+  calendar.render(); // Render the calendar
 });
+

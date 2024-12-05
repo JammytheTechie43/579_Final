@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>U-M Events & Notes</title>
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- FullCalendar CSS -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.css" rel="stylesheet">
   <!-- Custom CSS -->
@@ -13,38 +14,40 @@
 <body>
 <header class="container">
   <div class="row">
-    <h1 class="col">U-M Events & Notes</h1>
+    <h1 class="col text-center">U-M Events & Notes</h1>
   </div>
 </header>
-<main class="container">
-  <!-- Note-taking interface -->
-  <div id="notes-section" class="mt-4">
+
+<main class="container mt-4">
+  <!-- Note-taking Interface -->
+  <div id="notes-section" class="card p-3 mb-4">
     <h2>Take a Note</h2>
-    <textarea id="note-input" rows="4" placeholder="Type your note here..." class="form-control"></textarea>
-    <button id="save-note" class="btn btn-primary mt-2">Save Note</button>
-    <div id="notes-list" class="mt-4">
+    <textarea id="note-input" rows="4" class="form-control mb-2" placeholder="Type your note here..."></textarea>
+    <button id="save-note" class="btn btn-warning w-100">Save Note</button>
+    <div id="notes-list" class="mt-3">
       <h3>Saved Notes</h3>
       <!-- Notes will be displayed here -->
     </div>
   </div>
 
-  <!-- U-M Events section -->
-  <div id="events-section" class="mt-4">
-    <h2>Upcoming Events</h2>
-    <!-- Calendar container -->
+  <!-- Hockey Games Section -->
+  <div id="events-section" class="card p-3">
+    <h2>Michigan Hockey Games</h2>
+    <!-- Calendar Container -->
     <div id="calendar" class="mt-3"></div>
-    <!-- Event list container -->
+    <!-- Hockey Games List -->
     <div id="events-list" class="mt-4">
-      <h3>Event Details</h3>
+      <h3>Game Details</h3>
       <!-- Event items will be populated here -->
     </div>
   </div>
 </main>
+
 <!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+yU7imHzZHI2h5PAFl0g4Gd5x0bqPQvFro" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <!-- FullCalendar JS -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.js"></script>
-<!-- Custom JS -->
+<!-- Custom JavaScript -->
 <script src="js/script.js" defer></script>
 </body>
 </html>
