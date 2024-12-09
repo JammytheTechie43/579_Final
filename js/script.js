@@ -51,24 +51,32 @@ function displayNotes() {
     noteText.textContent = `${index + 1}. ${note}`;
     noteDiv.appendChild(noteText);
 
+    // Button group container
+    const buttonGroup = document.createElement('div');
+    buttonGroup.classList.add('btn-group'); // Groups buttons together
+
     // Edit button
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
-    editButton.classList.add('btn', 'btn-sm', 'btn-primary', 'ms-2');
+    editButton.classList.add('btn', 'btn-sm', 'btn-primary');
     editButton.addEventListener('click', () => editNote(index)); // Attach edit function
-    noteDiv.appendChild(editButton);
+    buttonGroup.appendChild(editButton);
 
     // Delete button
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
-    deleteButton.classList.add('btn', 'btn-sm', 'btn-danger', 'ms-2');
+    deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
     deleteButton.addEventListener('click', () => deleteNote(index)); // Attach delete function
-    noteDiv.appendChild(deleteButton);
+    buttonGroup.appendChild(deleteButton);
+
+    // Append button group to note container
+    noteDiv.appendChild(buttonGroup);
 
     // Append the note container to the list
     notesList.appendChild(noteDiv);
   });
 }
+
 
 // Edit a Note
 function editNote(index) {
