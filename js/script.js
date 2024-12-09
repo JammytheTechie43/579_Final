@@ -42,7 +42,6 @@ function displayNotes() {
   notesList.innerHTML = '';
 
   notes.forEach((note, index) => {
-    // Create a container for each note
     const noteDiv = document.createElement('div');
     noteDiv.classList.add('note-item', 'd-flex', 'justify-content-between', 'align-items-center', 'mb-2');
 
@@ -53,41 +52,33 @@ function displayNotes() {
 
     // Button group container
     const buttonGroup = document.createElement('div');
-    buttonGroup.classList.add('btn-group'); // Groups buttons together
+    buttonGroup.classList.add('btn-group');
 
     // Edit button
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
     editButton.classList.add('btn', 'btn-sm', 'btn-primary');
-    editButton.addEventListener('click', () => editNote(index)); // Attach edit function
+    editButton.addEventListener('click', () => editNote(index));
     buttonGroup.appendChild(editButton);
 
     // Delete button
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
-    deleteButton.addEventListener('click', () => deleteNote(index)); // Attach delete function
+    deleteButton.addEventListener('click', () => deleteNote(index));
     buttonGroup.appendChild(deleteButton);
 
-    // Append button group to note container
     noteDiv.appendChild(buttonGroup);
-
-    // Append the note container to the list
     notesList.appendChild(noteDiv);
   });
 }
-
 
 // Edit a Note
 function editNote(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
   const noteToEdit = notes[index];
-
-  // Populate the input field with the selected note
   document.querySelector('#note-input').value = noteToEdit;
-
-  // Remove the note and re-render the list after editing
-  notes.splice(index, 1); // Remove the note temporarily
+  notes.splice(index, 1);
   localStorage.setItem('notes', JSON.stringify(notes));
   displayNotes();
 }
@@ -95,9 +86,9 @@ function editNote(index) {
 // Delete a Note
 function deleteNote(index) {
   const notes = JSON.parse(localStorage.getItem('notes')) || [];
-  notes.splice(index, 1); // Remove the note at the specified index
-  localStorage.setItem('notes', JSON.stringify(notes)); // Update localStorage
-  displayNotes(); // Refresh the list
+  notes.splice(index, 1);
+  localStorage.setItem('notes', JSON.stringify(notes));
+  displayNotes();
 }
 
 // Display Hockey Games as a List
@@ -107,16 +98,42 @@ function displayEvents() {
 
   hockeySchedule.forEach((game) => {
     const eventItem = document.createElement('div');
-    eventItem.classList.add('event-item');
+    eventItem.classList.add('event-item', 'mb-3');
     eventItem.innerHTML = `
       <h4>${game.title}</h4>
       <p>Date: ${new Date(game.start).toLocaleString()}</p>
       <p>Location: ${game.location}</p>
       <p>Description: ${game.description}</p>
-      <a href="${game.url}" target="_blank">More Info</a>
     `;
+
+    // Add "Save as Note" button
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save as Note';
+    saveButton.classList.add('btn', 'btn-sm', 'btn-success', 'me-2');
+    saveButton.addEventListener('click', () => saveGameAsNote(game));
+    eventItem.appendChild(saveButton);
+
+    // Add "More Info" button
+    const moreInfoButton = document.createElement('a');
+    moreInfoButton.textContent = 'More Info';
+    moreInfoButton.href = game.url;
+    moreInfoButton.target = '_blank';
+    moreInfoButton.classList.add('btn', 'btn-sm', 'btn-primary');
+    eventItem.appendChild(moreInfoButton);
+
     eventsList.appendChild(eventItem);
   });
+}
+
+
+
+// Save a Game as a Note
+function saveGameAsNote(game) {
+  const note = `Game: ${game.title}, Date: ${new Date(game.start).toLocaleString()}, Location: ${game.location}, Description: ${game.description}`;
+  const notes = JSON.parse(localStorage.getItem('notes')) || [];
+  notes.push(note);
+  localStorage.setItem('notes', JSON.stringify(notes));
+  displayNotes();
 }
 
 // Initialize FullCalendar
@@ -135,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     },
     eventDidMount: function (info) {
-      // Optional: Add tooltip for games
       info.el.title = `${info.event.title} - ${info.event.extendedProps.location}`;
     }
   });
