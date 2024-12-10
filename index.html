@@ -4,50 +4,60 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>U-M Events & Notes</title>
-  <!-- Bootstrap CSS -->
+
+  <!-- Link to Bootstrap CSS for responsive layout and styling -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- FullCalendar CSS -->
+
+  <!-- Link to FullCalendar CSS for displaying the hockey schedule -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.css" rel="stylesheet">
-  <!-- Custom CSS -->
+
+  <!-- Link to custom CSS for app-specific styling -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header class="container">
   <div class="row">
+    <!-- Header section with the title of the application -->
     <h1 class="col text-center">U-M Events & Notes</h1>
   </div>
 </header>
 
 <main class="container mt-4">
-  <!-- Note-taking Interface -->
+  <!-- Section for note-taking functionality -->
   <div id="notes-section" class="card p-3 mb-4">
     <h2>Take a Note</h2>
+    <!-- Textarea for entering notes -->
     <textarea id="note-input" rows="4" class="form-control mb-2" placeholder="Type your note here..."></textarea>
+    <!-- Button to save the entered note -->
     <button id="save-note" class="btn btn-warning w-100">Save Note</button>
+    <!-- Container to display saved notes -->
     <div id="notes-list" class="mt-3">
       <h3>Saved Notes</h3>
-      <!-- Notes will be displayed here -->
+      <!-- Notes will be dynamically added here via JavaScript -->
     </div>
   </div>
 
-  <!-- Hockey Games Section -->
+  <!-- Section for displaying the Michigan Hockey schedule -->
   <div id="events-section" class="card p-3">
     <h2>Michigan Hockey Games</h2>
-    <!-- Calendar Container -->
+    <!-- Calendar container rendered using FullCalendar -->
     <div id="calendar" class="mt-3"></div>
-    <!-- Hockey Games List -->
+    <!-- List of game details displayed dynamically -->
     <div id="events-list" class="mt-4">
       <h3>Game Details</h3>
-      <!-- Event items will be populated here -->
+      <!-- Game details will be dynamically added here via JavaScript -->
     </div>
   </div>
 </main>
 
-<!-- Bootstrap JS Bundle -->
+<!-- Script for Bootstrap functionality -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<!-- FullCalendar JS -->
+
+<!-- Script for FullCalendar functionality -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.js"></script>
-<!-- Custom JavaScript -->
+
+<!-- Link to custom JavaScript logic for the app -->
 <script src="js/script.js" defer></script>
 </body>
 </html>
+
